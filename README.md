@@ -19,9 +19,9 @@ Welcome to [Series App](https://series-app-react-rivoli.netlify.app/)! This proj
 
 ## 📸 Screenshots
 
-![App Screenshot](./assets/img/accueil.png)
-![App Screenshot](./assets/img/genres.png)
-![App Screenshot](./assets/img/series.png)
+![App Screenshot](./src/assets/img/accueil.png)
+![App Screenshot](./src/assets/img/genres.png)
+![App Screenshot](./src/assets/img/series.png)
 
 ## 📝 License
 
