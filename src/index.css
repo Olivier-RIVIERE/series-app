@@ -1,0 +1,216 @@
+:root {
+  --primary-bg-color: #233a44;
+  --secondary-bg-color: #e9e6e6;
+  --accent-color: #31303077;
+  --text-color: #e9e6e6;
+  --button-bg-color: #e9e6e6;
+  --button-hover-bg-color: #233a44;
+  --button-hover-color: #e9e6e6;
+  --shadow: 0 8px 16px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+  --gradient-bg: linear-gradient(135deg, #4e6e74, #233a44);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+img {
+  max-width: 100%;
+}
+
+body {
+  background: var(--gradient-bg);
+  color: var(--text-color);
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.App {
+  margin-top: 5%;
+}
+
+.App, .form, .series-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 95vw;
+  max-width: 450px;
+}
+
+.results {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  width: 95vw;
+  min-height: 50vh; /* S'assure que la section occupe au moins 50% de la hauteur */
+}
+
+.form {
+  margin: 1rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  width: 100%;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease-in-out;
+}
+
+.form select {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  width: 100%;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.form label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.form input {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  width: 100%;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.form button {
+  cursor: pointer;
+  background-color: var(--button-bg-color);
+  color: var(--primary-bg-color);
+  border: none;
+  border-radius: 1rem;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.form button:hover {
+  background-color: var(--button-hover-bg-color);
+  color: var(--button-hover-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.series-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 1.2rem;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  width: calc(33.33% - 2rem); /* Ajustement à 33% de la largeur du conteneur */
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease-in-out;
+  min-height: 350px; /* Hauteur minimale pour s'assurer que les cartes sont toujours de taille raisonnable */
+  max-height: none; /* Hauteur dynamique sans limite spécifique */
+  overflow: hidden;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column; /* Garantir l'alignement vertical du contenu */
+  justify-content: flex-start; /* Assure que le contenu est bien positionné */
+}
+
+.series-card h2 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.series-card p {
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.series-card img {
+  margin-bottom: 1rem;
+  border-radius: 0.8rem;
+  max-height: 250px; /* Hauteur image augmentée */
+  object-fit: cover;
+}
+
+.series-card a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.series-card a:hover {
+  color: #ff9800;
+  text-decoration: underline;
+}
+
+.series-card p strong {
+  font-weight: bold;
+  color: #ff9800;
+}
+
+.footer {
+  margin-top: auto;
+  padding: 1rem;
+  text-align: center;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  width: 100%;
+  box-shadow: var(--shadow);
+}
+
+/* Media queries pour responsive design */
+@media (max-width: 768px) {
+  .series-card {
+    width: calc(50% - 2rem); /* 2 cartes par ligne pour écrans de taille moyenne */
+  }
+
+  .results {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .series-card {
+    width: 100%; /* 1 carte par ligne pour très petits écrans */
+  }
+
+  .results {
+    gap: 1rem;
+  }
+}
