@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SeriesCard from "./SeriesCard";
 
 const Results = ({ data }) => {
@@ -21,6 +21,11 @@ const Results = ({ data }) => {
   // Extraire les éléments pour la page actuelle
   // slice(12, 24) va prendre les éléments de 12 à 23
   const currentData = data.slice(startIndex, endIndex);
+
+  // Réinitialiser la page quand les données changent
+  useEffect(() => {
+      setCurrentPage(1);
+  }, [data]);
 
   // Fonction pour aller à la page précédente
   //  On vérifie si la page actuelle est plus grande que 1
