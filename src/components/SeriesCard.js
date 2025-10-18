@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 const SeriesCard = ({ series }) => {
-  const show = series.show || series; 
-  const person = series.person || {}; 
+  // Créer un état pour savoir si la carte est dépliée ou non
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const show = series.show || series;
+  const person = series.person || {};
 
   // Titre et image
   const title = show.name || person.name || "Titre indisponible";
@@ -18,50 +21,61 @@ const SeriesCard = ({ series }) => {
   // Données pour l'acteur
   const actorName = person.name || "Acteur inconnu";
   const actorImage = person.image?.medium || null;
-  const actorBirthday = person.birthday 
-  ? new Date(person.birthday).toLocaleDateString('fr-FR') 
-  : "Non renseigné";
+  const actorBirthday = person.birthday
+    ? new Date(person.birthday).toLocaleDateString('fr-FR')
+    : "Non renseigné";
   const actorCountry = person.country?.name || "Non renseigné";
   const actorShows = person.shows || [];
 
+  // Fonction qui inverse l'état de la carte
+  const toggleDetail = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
-    <div className="series-card">
+    // onClick sur toute la carte pour l'ouvrir ou la fermer
+    <div className="series-card" onClick={toggleDetail} style={{ cursor: 'pointer' }}>
       <h2>{title}</h2>
       {image && <img src={image} alt={title} />}
 
-      {show.name ? (
+      {/* Les infos ne s'affichent que si isExpanded est <vrai> */}
+      {isExpanded && (
         <>
-          <p><strong>Genres :</strong> {genres}</p>
-          <p><strong>Pays d'origine :</strong> {country}</p>
-          <p>
-            <strong>Résumé :</strong>{" "}
-            <span dangerouslySetInnerHTML={{ __html: summary }} />
-          </p>
-          <p>
-            <strong>Chaine :</strong>{" "}
-            <a href={link} target="_blank" rel="noreferrer">
-              {network}
-            </a>
-          </p>
-        </>
-      ) : person.name ? (
-        <>
-          <p><strong>Nom de l'acteur :</strong> {actorName}</p>
-          {/* <img src={actorImage} alt={actorName} /> */}
-          <p><strong>Date de naissance :</strong> {actorBirthday}</p>
-          <p><strong>Pays d'origine :</strong> {actorCountry}</p>
-          <ul>
-            {actorShows.map((showUrl, index) => (
-              <li key={index}>
-                <a href={showUrl} target="_blank" rel="noreferrer">
-                  {`Show ${index + 1}`}
+          {show.name ? (
+            <>
+              <p><strong>Genres :</strong> {genres}</p>
+              <p><strong>Pays d'origine :</strong> {country}</p>
+              <p>
+                <strong>Résumé :</strong>{" "}
+                <span dangerouslySetInnerHTML={{ __html: summary }} />
+              </p>
+              <p>
+                <strong>Chaine :</strong>{" "}
+                <a href={link} target="_blank" rel="noreferrer">
+                  {network}
                 </a>
-              </li>
-            ))}
-          </ul>
+              </p>
+            </>
+          ) : person.name ? (
+            <>
+              <p><strong>Nom de l'acteur :</strong> {actorName}</p>
+              {/* <img src={actorImage} alt={actorName} /> */}
+              <p><strong>Date de naissance :</strong> {actorBirthday}</p>
+              <p><strong>Pays d'origine :</strong> {actorCountry}</p>
+              <ul>
+                {actorShows.map((showUrl, index) => (
+                  <li key={index}>
+                    <a href={showUrl} target="_blank" rel="noreferrer">
+                      {`Show ${index + 1}`}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <p>Aucune information disponible.</p>
+          )}
         </>
-      ) : (
-        <p>Aucune information disponible.</p>
       )}
     </div>
   );

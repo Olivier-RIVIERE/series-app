@@ -184,6 +184,48 @@ body {
   color: #ff9800;
 }
 
+/* Style pour la pagination */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.pagination-btn {
+  cursor: pointer;
+  background-color: var(--button-bg-color);
+  color: var(--primary-bg-color);
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease-in-out;
+  font-size: 1rem;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: var(--button-hover-bg-color);
+  color: var(--button-hover-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  color: var(--text-color);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Style pour le footer */
+
 .footer {
   margin-top: auto;
   padding: 1rem;

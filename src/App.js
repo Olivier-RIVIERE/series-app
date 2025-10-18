@@ -57,7 +57,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Séries TV 📺</h1>
+      <h1>Les séries TV</h1>
       <Form onSearch={fetchResults} genres={genres} />
       <Results data={results} />
       
