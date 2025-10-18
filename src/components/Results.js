@@ -45,13 +45,6 @@ const Results = ({ data }) => {
     }
   };
 
-  // Fonction pour aller directement à une page spécifique
-  const goToPage = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    window.scrollTo(0, 0);
-  }
-
-
   return (
     <>
       <div className="results">

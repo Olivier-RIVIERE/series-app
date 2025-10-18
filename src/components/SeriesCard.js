@@ -20,7 +20,7 @@ const SeriesCard = ({ series }) => {
 
   // Données pour l'acteur
   const actorName = person.name || "Acteur inconnu";
-  const actorImage = person.image?.medium || null;
+  // const actorImage = person.image?.medium || null;
   const actorBirthday = person.birthday
     ? new Date(person.birthday).toLocaleDateString('fr-FR')
     : "Non renseigné";
