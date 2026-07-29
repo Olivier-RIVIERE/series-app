@@ -1,106 +1,145 @@
-import React, { useState } from "react";
+import { useState } from "react";
+
+const PLACEHOLDER_IMAGE =
+  "https://placehold.co/420x600/182035/e8edff?text=Series%0AExplorer";
+
+const removeHtmlTags = (value) => {
+  if (!value) {
+    return "Aucun résumé n’est disponible pour cette série.";
+  }
+
+  return value.replace(/<[^>]*>/g, "").trim();
+};
+
+const getYear = (date) => {
+  if (!date) {
+    return "—";
+  }
+
+  return new Date(date).getFullYear();
+};
 
 const SeriesCard = ({ series }) => {
-  // Créer un état pour savoir si la carte est dépliée ou non
   const [isExpanded, setIsExpanded] = useState(false);
 
   const show = series.show || series;
-  const person = series.person || {};
+  const {
+    name,
+    image,
+    genres = [],
+    rating,
+    status,
+    premiered,
+    ended,
+    summary,
+    network,
+    webChannel,
+    officialSite,
+    language,
+    type,
+    searchedActor,
+    characterName,
+  } = show;
 
-  // Titre et image
-  const title = show.name || person.name || "Titre indisponible";
-  const image = show.image?.medium || person.image?.medium || null;
-
-  // Données pour la série
-  const genres = show.genres?.length > 0 ? show.genres.join(", ") : "Non disponible";
-  const country = show.network?.country?.name || "Non disponible";
-  const summary = show.summary || "Résumé indisponible";
-  const network = show.network?.name || "Non disponible";
-  const link = show.officialSite || "#";
-
-  // Données pour l'acteur
-  const actorName = person.name || "Acteur inconnu";
-  // const actorImage = person.image?.medium || null;
-  const actorBirthday = person.birthday
-    ? new Date(person.birthday).toLocaleDateString('fr-FR')
-    : "Non renseigné";
-  const actorCountry = person.country?.name || "Non renseigné";
-  const actorShows = person.shows || [];
-
-  // Fonction qui inverse l'état de la carte
-  const toggleDetail = () => {
-    setIsExpanded(!isExpanded);
-  };
+  const provider = network?.name || webChannel?.name || "Non renseigné";
+  const country = network?.country?.name || "International";
+  const score = rating?.average ? rating.average.toFixed(1) : "N/A";
+  const years = ended
+    ? `${getYear(premiered)} — ${getYear(ended)}`
+    : `${getYear(premiered)} — aujourd’hui`;
 
   return (
-    // onClick sur toute la carte pour l'ouvrir ou la fermer
-    <div className="series-card" onClick={toggleDetail} style={{ cursor: 'pointer' }}>
-      <h2>{title}</h2>
-      {image && <img src={image} alt={title} />}
+    <article className="series-card">
+      <div className="poster-wrapper">
+        <img
+          className="series-poster"
+          src={image?.medium || PLACEHOLDER_IMAGE}
+          alt={`Affiche de ${name}`}
+          loading="lazy"
+          onError={(event) => {
+            event.currentTarget.src = PLACEHOLDER_IMAGE;
+          }}
+        />
 
-      {/* Les infos ne s'affichent que si isExpanded est <vrai> */}
-      {isExpanded && (
-        <>
-          {show.name ? (
-            <>
-              <p><strong>Genres :</strong> {genres}</p>
-              <p><strong>Pays d'origine :</strong> {country}</p>
-              <p>
-                <strong>Résumé :</strong>{" "}
-                <span dangerouslySetInnerHTML={{ __html: summary }} />
-              </p>
-              <p>
-                <strong>Chaine :</strong>{" "}
-                <a href={link} target="_blank" rel="noreferrer">
-                  {network}
-                </a>
-              </p>
-            </>
-          ) : person.name ? (
-            <>
-              <p><strong>Nom de l'acteur :</strong> {actorName}</p>
-              {/* <img src={actorImage} alt={actorName} /> */}
-              <p><strong>Date de naissance :</strong> {actorBirthday}</p>
-              <p><strong>Pays d'origine :</strong> {actorCountry}</p>
-              <ul>
-                {actorShows.map((showUrl, index) => (
-                  <li key={index}>
-                    <a href={showUrl} target="_blank" rel="noreferrer">
-                      {`Show ${index + 1}`}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </>
+        <span className={`status-badge status-${status?.toLowerCase() || "unknown"}`}>
+          {status || "Inconnu"}
+        </span>
+
+        <span className="rating-badge" title="Note TVMaze">
+          ★ {score}
+        </span>
+      </div>
+
+      <div className="series-content">
+        <p className="series-meta">
+          {type || "Série"} · {years}
+        </p>
+
+        <h3>{name || "Titre indisponible"}</h3>
+
+        {searchedActor && (
+          <p className="actor-highlight">
+            Avec {searchedActor}
+            {characterName ? ` · ${characterName}` : ""}
+          </p>
+        )}
+
+        <div className="genres-list">
+          {genres.length > 0 ? (
+            genres.slice(0, 3).map((genre) => (
+              <span className="genre-badge" key={genre}>
+                {genre}
+              </span>
+            ))
           ) : (
-            <p>Aucune information disponible.</p>
+            <span className="genre-badge">Genre inconnu</span>
           )}
-        </>
-      )}
-    </div>
+        </div>
+
+        <button
+          className="details-button"
+          type="button"
+          onClick={() => setIsExpanded((currentValue) => !currentValue)}
+          aria-expanded={isExpanded}
+        >
+          {isExpanded ? "Masquer les détails" : "Voir les détails"}
+          <span aria-hidden="true">{isExpanded ? "↑" : "↓"}</span>
+        </button>
+
+        {isExpanded && (
+          <div className="series-details">
+            <p>{removeHtmlTags(summary)}</p>
+
+            <dl className="series-facts">
+              <div>
+                <dt>Diffusion</dt>
+                <dd>{provider}</dd>
+              </div>
+              <div>
+                <dt>Pays</dt>
+                <dd>{country}</dd>
+              </div>
+              <div>
+                <dt>Langue</dt>
+                <dd>{language || "Non renseignée"}</dd>
+              </div>
+            </dl>
+
+            {officialSite && (
+              <a
+                className="official-link"
+                href={officialSite}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Site officiel <span aria-hidden="true">↗</span>
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    </article>
   );
 };
 
 export default SeriesCard;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
