@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="footer">
       <p>
         © {currentYear} <strong>Series App</strong> · Projet portfolio
-        développé par <a href="https://olivier-riviere-web.vercel.app">Olivier Rivière</a>.
+        développé par <a href="https://olivier-riviere-web.vercel.app" target="_blank">Olivier Rivière</a>.
       </p>
 
       <div className="footer-links">
